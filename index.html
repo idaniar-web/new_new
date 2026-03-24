@@ -5,84 +5,97 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <link rel="manifest" href="manifest.json" />
   <link rel="apple-touch-icon" href="wellpass.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
   <title>WellPass</title>
   <style>
-    * { 
-      margin: 0; padding: 0; box-sizing: border-box; 
-      -webkit-tap-highlight-color: transparent; user-select: none; 
-    }
-    
-    /* On force l'affichage sur toute la hauteur réelle de l'iPhone */
-    html, body { 
-      height: 100%; 
-      width: 100%; 
-      overflow: hidden; 
-      background: #fff; 
-      font-family: 'Google Sans', sans-serif; 
+    :root {
+      --safe-bottom: env(safe-area-inset-bottom);
     }
 
-    .screen { 
-      position: relative;
-      height: 100vh; /* Repli si dvh n'est pas supporté */
-      height: 100dvh; 
-      width: 100%; 
-      max-width: 430px; 
-      margin: 0 auto; 
+    * { 
+      margin: 0; 
+      padding: 0; 
+      box-sizing: border-box; 
+      -webkit-tap-highlight-color: transparent; 
+      user-select: none; 
+    }
+
+    html, body { 
+      height: 100%; 
+      background: #fff; 
+      font-family: 'Google Sans', -apple-system, sans-serif; 
+    }
+
+    /* Conteneur principal */
+    .app { 
+      min-height: 100vh;
       display: flex; 
       flex-direction: column; 
     }
 
+    /* Section Image Haut */
     .top-section { 
-      flex-shrink: 0; 
       width: 100%; 
+      line-height: 0; 
     }
     .top-section img { 
       width: 100%; 
       display: block; 
     }
 
-    .bottom-section { 
-      flex: 1; 
-      display: flex; 
-      flex-direction: column; 
-      align-items: center; 
-      padding: 28px 24px; 
-      /* On laisse de la place en bas pour ne pas que le texte soit sous le bouton */
-      padding-bottom: 120px; 
-      overflow-y: auto;
-    }
-
-    .profile-photo { width: 72px; height: 72px; border-radius: 50%; object-fit: cover; }
-    .user-name { margin-top: 8px; font-size: 18px; color: #6B3FA0; font-weight: 300; }
-    .venue-datetime { margin-top: 24px; font-size: 15px; color: #444; text-align: center; }
-
-    /* LE FIX : Positionnement FIXE par rapport au viewport */
-    .btn-wrap {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      z-index: 999;
+    /* Section Contenu (Card style) */
+    .content { 
+      flex: 1;
       background: #fff;
       display: flex;
-      justify-content: center;
-      /* Padding stratégique : 15px de base + la zone sécurisée de l'iPhone (barre home) */
-      padding: 15px 24px calc(15px + env(safe-area-inset-bottom));
+      flex-direction: column;
+      align-items: center;
+      padding: 28px 24px 140px; /* Padding bas important pour ne pas cacher le texte derrière le bouton */
     }
 
-    /* Centrage du bouton si l'écran est plus large que 430px (iPad/Desktop) */
-    @media (min-width: 431px) {
-      .btn-wrap {
-        left: 50%;
-        transform: translateX(-50%);
-        max-width: 430px;
-      }
+    .profile-photo { 
+      width: 72px; 
+      height: 72px; 
+      border-radius: 50%; 
+      object-fit: cover; 
+    }
+
+    .user-name { 
+      margin-top: 8px; 
+      font-size: 18px; 
+      font-weight: 300; 
+      color: #6B3FA0; 
+      letter-spacing: 0.2px; 
+    }
+
+    .venue-datetime { 
+      margin-top: 24px; 
+      font-size: 15px; 
+      font-weight: 400; 
+      color: #444; 
+      text-align: center; 
+    }
+
+    /* POSITIONNEMENT DU BOUTON (Approche du 2ème code) */
+    .btn-wrap {
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: calc(12px + var(--safe-bottom)); /* Aligné précisément sur le bas iOS */
+      display: flex;
+      justify-content: center;
+      pointer-events: none; /* Le conteneur ne bloque pas le scroll */
+      z-index: 100;
     }
 
     .btn-retour {
-      width: 100%;
+      pointer-events: auto; /* Le bouton reste cliquable */
+      width: 90%;
+      max-width: 400px;
       padding: 16px;
       border-radius: 50px;
       background: #5B35C5;
@@ -90,38 +103,46 @@
       font-size: 17px;
       font-weight: 500;
       text-align: center;
-      cursor: pointer;
-      box-shadow: 0 -2px 10px rgba(0,0,0,0.05); /* Légère ombre pour décoller du fond blanc */
+      text-decoration: none;
+      box-shadow: 0 10px 24px rgba(91, 53, 197, 0.25);
     }
 
-    .btn-retour:active { opacity: 0.8; transform: scale(0.98); }
+    .btn-retour:active {
+      opacity: 0.8;
+      transform: scale(0.98);
+    }
   </style>
 </head>
 <body>
 
-  <div class="screen">
+  <div class="app">
     <div class="top-section">
-      <img src="background 2.jpg" alt="" />
+      <img src="background 2.jpg" alt="Header" />
     </div>
 
-    <div class="bottom-section">
-      <img class="profile-photo" src="profile.png" alt="Leo" />
+    <div class="content">
+      <img class="profile-photo" src="profile.png" alt="Profile" />
       <span class="user-name">Leo Braimont</span>
       <span class="venue-datetime" id="venue-datetime"></span>
     </div>
   </div>
 
   <div class="btn-wrap">
-    <div class="btn-retour" onclick="window.history.back()">Retour</div>
+    <a href="#" class="btn-retour" onclick="window.history.back()">Retour</a>
   </div>
 
   <script>
     (function () {
       const now = new Date();
-      const months = ['janvier','février','mars','avril','mai','juin','juillet','août','septembre','octobre','novembre','décembre'];
-      const dateStr = `${now.getDate()} ${months[now.getMonth()]} ${now.getFullYear()} ${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`;
+      const months = ['janvier','février','mars','avril','mai','juin',
+                      'juillet','août','septembre','octobre','novembre','décembre'];
+      const h = String(now.getHours()).padStart(2,'0');
+      const m = String(now.getMinutes()).padStart(2,'0');
+      const dateStr = `${now.getDate()} ${months[now.getMonth()]} ${now.getFullYear()} ${h}:${m}`;
       document.getElementById('venue-datetime').textContent = `RITM Ternes Paris – ${dateStr}`;
     })();
+
+    if('serviceWorker' in navigator) navigator.serviceWorker.register('service-worker.js').catch(()=>{});
   </script>
 </body>
 </html>
