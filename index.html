@@ -101,28 +101,8 @@
   </div>
 
   <!-- Button fixed outside flow, always at bottom -->
-  <div style="
-    position: fixed;
-    left: 0; right: 0;
-    bottom: var(--safe-bottom);
-    display: flex;
-    justify-content: center;
-    pointer-events: none;
-  ">
-    <div style="
-      pointer-events: none;
-      width: 90%;
-      max-width: 400px;
-      padding: 14px;
-      border-radius: 50px;
-      background: #5B35C5;
-      color: #fff;
-      font-family: 'Google Sans', sans-serif;
-      font-size: 17px;
-      font-weight: 500;
-      text-align: center;
-      cursor: default;
-    ">Retour</div>
+  <div style="position:fixed;left:0;right:0;bottom:0;padding-bottom:env(safe-area-inset-bottom);display:flex;justify-content:center;pointer-events:none;">
+    <div style="pointer-events:none;width:90%;max-width:400px;padding:14px;border-radius:50px;background:#5B35C5;color:#fff;font-family:'Google Sans',sans-serif;font-size:17px;font-weight:500;text-align:center;cursor:default;">Retour</div>
   </div>
 
   <script>
