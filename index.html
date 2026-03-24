@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="WellPass" />
+  <link rel="manifest" href="manifest.json" />
+  <link rel="apple-touch-icon" href="profile.png" />
+  <title>WellPass</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+    }
+
+    html, body {
+      height: 100%;
+      width: 100%;
+      font-family: -apple-system, 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif;
+      background: #fff;
+      overflow: hidden;
+    }
+
+    .screen {
+      display: flex;
+      flex-direction: column;
+      height: 100dvh;
+      width: 100%;
+      max-width: 430px;
+      margin: 0 auto;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .top-section {
+      position: relative;
+      height: 50%;
+      flex-shrink: 0;
+      background-image: url('background.png');
+      background-size: cover;
+      background-position: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .top-section::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(30, 120, 60, 0.35);
+    }
+
+    .top-content {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .thumbs-up {
+      width: 70px;
+      height: 70px;
+      object-fit: contain;
+      filter: drop-shadow(0 2px 6px rgba(0,0,0,0.2));
+    }
+
+    .validated-label {
+      font-size: 26px;
+      font-weight: 700;
+      color: #ffffff;
+      letter-spacing: 0.2px;
+      text-shadow: 0 1px 4px rgba(0,0,0,0.25);
+    }
+
+    .reference-number {
+      font-size: 13px;
+      font-weight: 500;
+      color: rgba(255,255,255,0.85);
+      letter-spacing: 0.4px;
+    }
+
+    .bottom-section {
+      flex: 1;
+      background: #ffffff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 0 24px;
+      padding-bottom: max(28px, env(safe-area-inset-bottom));
+    }
+
+    .profile-wrapper {
+      margin-top: -44px;
+      z-index: 2;
+    }
+
+    .profile-photo {
+      width: 88px;
+      height: 88px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid #ffffff;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+    }
+
+    .user-name {
+      margin-top: 12px;
+      font-size: 20px;
+      font-weight: 700;
+      color: #1a1a1a;
+    }
+
+    .divider {
+      width: 100%;
+      height: 1px;
+      background: #ebebeb;
+      margin: 18px 0;
+    }
+
+    .venue-name {
+      font-size: 15px;
+      font-weight: 600;
+      color: #1a1a1a;
+      text-align: center;
+    }
+
+    .datetime {
+      margin-top: 6px;
+      font-size: 13px;
+      font-weight: 400;
+      color: #6e6e73;
+      text-align: center;
+    }
+
+    .spacer { flex: 1; }
+
+    .btn-retour {
+      width: 100%;
+      max-width: 340px;
+      padding: 16px;
+      border-radius: 14px;
+      background: #1a73e8;
+      color: #ffffff;
+      font-size: 17px;
+      font-weight: 600;
+      text-align: center;
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="screen">
+    <div class="top-section">
+      <div class="top-content">
+        <img class="thumbs-up" src="139-1391435_blue-thumbs-up-icon-svg-clip-arts-transparent.png" alt="" />
+        <span class="validated-label">Séance validée</span>
+        <span class="reference-number">Réf : 05996314</span>
+      </div>
+    </div>
+
+    <div class="bottom-section">
+      <div class="profile-wrapper">
+        <img class="profile-photo" src="profile.png" alt="Leo Braimont" />
+      </div>
+      <span class="user-name">Leo Braimont</span>
+      <div class="divider"></div>
+      <span class="venue-name">RITM ternes Paris</span>
+      <span class="datetime" id="datetime"></span>
+      <div class="spacer"></div>
+      <div class="btn-retour">Retour</div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      const now = new Date();
+      const days = ['Dimanche','Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi'];
+      const months = ['janvier','février','mars','avril','mai','juin','juillet','août','septembre','octobre','novembre','décembre'];
+      const h = String(now.getHours()).padStart(2,'0');
+      const m = String(now.getMinutes()).padStart(2,'0');
+      document.getElementById('datetime').textContent =
+        `${days[now.getDay()]} ${now.getDate()} ${months[now.getMonth()]} ${now.getFullYear()} · ${h}:${m}`;
+    })();
+  </script>
+</body>
+</html>
