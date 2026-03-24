@@ -7,7 +7,9 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="apple-mobile-web-app-title" content="WellPass" />
   <link rel="manifest" href="manifest.json" />
-  <link rel="apple-touch-icon" href="profile.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
   <title>WellPass</title>
   <style>
     * {
@@ -21,9 +23,8 @@
     html, body {
       height: 100%;
       width: 100%;
-      font-family: -apple-system, 'SF Pro Text', 'Helvetica Neue', Arial, sans-serif;
-      background: #fff;
       overflow: hidden;
+      background: #fff;
     }
 
     .screen {
@@ -33,151 +34,93 @@
       width: 100%;
       max-width: 430px;
       margin: 0 auto;
+      font-family: 'Google Sans', 'Helvetica Neue', Arial, sans-serif;
+      position: relative;
       overflow: hidden;
     }
 
-    /* ── TOP HALF ── */
+    /* ── TOP: baked-in background image ── */
     .top-section {
-      position: relative;
       height: 50%;
       flex-shrink: 0;
-      background-image: url('background.png');
+      background-image: url('background 2.jpg');
       background-size: cover;
-      background-position: center;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      background-position: center top;
     }
 
-    .top-section::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: rgba(34, 139, 60, 0.55);
-    }
-
-    .top-content {
-      position: relative;
-      z-index: 1;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .thumbs-up {
-      width: 72px;
-      height: 72px;
-      object-fit: contain;
-      mix-blend-mode: multiply;
-    }
-
-    .validated-label {
-      font-size: 27px;
-      font-weight: 700;
-      color: #ffffff;
-      letter-spacing: 0.1px;
-      text-shadow: 0 1px 3px rgba(0,0,0,0.2);
-    }
-
-    .reference-number {
-      font-size: 13px;
-      font-weight: 400;
-      color: rgba(255,255,255,0.9);
-      letter-spacing: 0.3px;
-    }
-
-    /* ── BOTTOM HALF ── */
+    /* ── BOTTOM ── */
     .bottom-section {
       flex: 1;
       background: #ffffff;
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding: 0 20px;
-      padding-bottom: max(32px, env(safe-area-inset-bottom));
+      padding: 0 24px;
+      padding-bottom: max(16px, env(safe-area-inset-bottom));
     }
 
-    .profile-wrapper {
-      margin-top: -46px;
-      z-index: 2;
-    }
-
+    /* Profile photo — sits well below the fold, no border/shadow */
     .profile-photo {
-      width: 90px;
-      height: 90px;
+      width: 86px;
+      height: 86px;
       border-radius: 50%;
       object-fit: cover;
-      border: 3px solid #ffffff;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.18);
-      display: block;
+      margin-top: 28px;
     }
 
     .user-name {
       margin-top: 14px;
-      font-size: 20px;
-      font-weight: 700;
-      color: #000000;
-      letter-spacing: 0.1px;
+      font-size: 22px;
+      font-weight: 300;
+      color: #6B3FA0;
+      letter-spacing: 0.2px;
     }
 
     .divider {
-      width: calc(100% - 0px);
+      width: 100%;
       height: 1px;
-      background: #e0e0e0;
-      margin: 20px 0 18px;
+      background: #e8e8e8;
+      margin: 18px 0;
     }
 
-    .venue-name {
-      font-size: 15px;
-      font-weight: 600;
-      color: #000000;
-      text-align: center;
-    }
-
-    .datetime {
-      margin-top: 5px;
+    .venue-datetime {
       font-size: 13px;
       font-weight: 400;
-      color: #8a8a8e;
+      color: #888888;
       text-align: center;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      width: 100%;
     }
 
     .spacer { flex: 1; }
 
     .btn-retour {
       width: 100%;
-      padding: 17px;
+      padding: 16px;
       border-radius: 50px;
-      background: #2979ff;
+      background: #1976D2;
       color: #ffffff;
+      font-family: 'Google Sans', 'Helvetica Neue', Arial, sans-serif;
       font-size: 17px;
-      font-weight: 600;
+      font-weight: 500;
       text-align: center;
-      letter-spacing: 0.1px;
       pointer-events: none;
       cursor: default;
+      margin-bottom: 8px;
     }
   </style>
 </head>
 <body>
   <div class="screen">
-    <div class="top-section">
-      <div class="top-content">
-        <img class="thumbs-up" src="139-1391435_blue-thumbs-up-icon-svg-clip-arts-transparent.png" alt="" />
-        <span class="validated-label">Séance validée</span>
-        <span class="reference-number">Réf : 05996314</span>
-      </div>
-    </div>
+    <div class="top-section"></div>
 
     <div class="bottom-section">
-      <div class="profile-wrapper">
-        <img class="profile-photo" src="profile.png" alt="Leo Braimont" />
-      </div>
+      <img class="profile-photo" src="profile.png" alt="Leo Braimont" />
       <span class="user-name">Leo Braimont</span>
       <div class="divider"></div>
-      <span class="venue-name">RITM ternes Paris</span>
-      <span class="datetime" id="datetime"></span>
+      <span class="venue-datetime" id="venue-datetime"></span>
       <div class="spacer"></div>
       <div class="btn-retour">Retour</div>
     </div>
@@ -190,8 +133,8 @@
       const months = ['janvier','février','mars','avril','mai','juin','juillet','août','septembre','octobre','novembre','décembre'];
       const h = String(now.getHours()).padStart(2,'0');
       const m = String(now.getMinutes()).padStart(2,'0');
-      document.getElementById('datetime').textContent =
-        `${days[now.getDay()]} ${now.getDate()} ${months[now.getMonth()]} ${now.getFullYear()} · ${h}:${m}`;
+      const dateStr = `${days[now.getDay()]} ${now.getDate()} ${months[now.getMonth()]} ${now.getFullYear()} · ${h}:${m}`;
+      document.getElementById('venue-datetime').textContent = `RITM ternes Paris · ${dateStr}`;
     })();
   </script>
 </body>
