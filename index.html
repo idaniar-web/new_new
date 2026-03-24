@@ -35,72 +35,59 @@
       max-width: 430px;
       margin: 0 auto;
       font-family: 'Google Sans', 'Helvetica Neue', Arial, sans-serif;
-      position: relative;
       overflow: hidden;
     }
 
-    /* ── TOP: baked-in background image ── */
+    /* Top section — taller to clear Dynamic Island */
     .top-section {
-      height: 50%;
       flex-shrink: 0;
+      height: 58%;
       background-image: url('background 2.jpg');
       background-size: cover;
       background-position: center top;
     }
 
-    /* ── BOTTOM ── */
+    /* Bottom section */
     .bottom-section {
       flex: 1;
       background: #ffffff;
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding: 0 24px;
-      padding-bottom: max(16px, env(safe-area-inset-bottom));
+      padding: 28px 24px 0;
     }
 
-    /* Profile photo — sits well below the fold, no border/shadow */
     .profile-photo {
-      width: 86px;
-      height: 86px;
+      width: 108px;
+      height: 108px;
       border-radius: 50%;
       object-fit: cover;
-      margin-top: 28px;
+      display: block;
     }
 
     .user-name {
-      margin-top: 14px;
-      font-size: 22px;
+      margin-top: 16px;
+      font-size: 26px;
       font-weight: 300;
       color: #6B3FA0;
       letter-spacing: 0.2px;
     }
 
-    .divider {
-      width: 100%;
-      height: 1px;
-      background: #e8e8e8;
-      margin: 18px 0;
-    }
-
     .venue-datetime {
-      font-size: 13px;
+      margin-top: 12px;
+      font-size: 14px;
       font-weight: 400;
       color: #888888;
       text-align: center;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      width: 100%;
     }
 
     .spacer { flex: 1; }
 
     .btn-retour {
       width: 100%;
-      padding: 16px;
+      padding: 18px;
       border-radius: 50px;
-      background: #1976D2;
+      background: #5B35C5;
       color: #ffffff;
       font-family: 'Google Sans', 'Helvetica Neue', Arial, sans-serif;
       font-size: 17px;
@@ -108,7 +95,7 @@
       text-align: center;
       pointer-events: none;
       cursor: default;
-      margin-bottom: 8px;
+      margin-bottom: max(24px, env(safe-area-inset-bottom));
     }
   </style>
 </head>
@@ -119,7 +106,6 @@
     <div class="bottom-section">
       <img class="profile-photo" src="profile.png" alt="Leo Braimont" />
       <span class="user-name">Leo Braimont</span>
-      <div class="divider"></div>
       <span class="venue-datetime" id="venue-datetime"></span>
       <div class="spacer"></div>
       <div class="btn-retour">Retour</div>
@@ -129,12 +115,12 @@
   <script>
     (function () {
       const now = new Date();
-      const days = ['Dimanche','Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi'];
-      const months = ['janvier','février','mars','avril','mai','juin','juillet','août','septembre','octobre','novembre','décembre'];
+      const months = ['janvier','février','mars','avril','mai','juin',
+                      'juillet','août','septembre','octobre','novembre','décembre'];
       const h = String(now.getHours()).padStart(2,'0');
       const m = String(now.getMinutes()).padStart(2,'0');
-      const dateStr = `${days[now.getDay()]} ${now.getDate()} ${months[now.getMonth()]} ${now.getFullYear()} · ${h}:${m}`;
-      document.getElementById('venue-datetime').textContent = `RITM ternes Paris · ${dateStr}`;
+      const dateStr = `${now.getDate()} ${months[now.getMonth()]} ${now.getFullYear()} ${h}:${m}`;
+      document.getElementById('venue-datetime').textContent = `RITM Ternes Paris – ${dateStr}`;
     })();
   </script>
 </body>
