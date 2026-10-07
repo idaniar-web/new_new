@@ -955,6 +955,8 @@ Wellpass</p>
   </div>
 
   <script>
+    console.log('Script loaded');
+
     // Page navigation
     function showPage(pageId) {
       console.log('showPage called with:', pageId);
@@ -977,23 +979,13 @@ Wellpass</p>
     let touchStartX = 0;
     let touchEndX = 0;
 
-    const slider = document.getElementById('gym-slider');
-    
     function updateSlider() {
-      slider.style.transform = `translateX(-${currentPhoto * 20}%)`;
-      document.getElementById('photo-current').textContent = currentPhoto + 1;
+      const slider = document.getElementById('gym-slider');
+      if (slider) {
+        slider.style.transform = `translateX(-${currentPhoto * 20}%)`;
+        document.getElementById('photo-current').textContent = currentPhoto + 1;
+      }
     }
-
-    // Touch swipe for slider
-    const heroSection = document.querySelector('.gym-hero');
-    heroSection.addEventListener('touchstart', e => {
-      touchStartX = e.changedTouches[0].screenX;
-    });
-
-    heroSection.addEventListener('touchend', e => {
-      touchEndX = e.changedTouches[0].screenX;
-      handleSwipe();
-    });
 
     function handleSwipe() {
       const diff = touchStartX - touchEndX;
@@ -1009,6 +1001,7 @@ Wellpass</p>
 
     // Check-in functionality
     function performCheckIn() {
+      console.log('performCheckIn called');
       const now = new Date();
       const months = ['January','February','March','April','May','June',
                       'July','August','September','October','November','December'];
@@ -1020,46 +1013,66 @@ Wellpass</p>
       showPage('checkin-success');
     }
 
-    // Add touch/click handlers for check-in button (iOS fix)
-    const checkinBtn = document.querySelector('.checkin-btn');
-    if (checkinBtn) {
-      checkinBtn.addEventListener('click', performCheckIn);
-      checkinBtn.addEventListener('touchend', function(e) {
-        e.preventDefault();
-        performCheckIn();
-      });
-    }
+    // Initialize all event listeners after DOM is ready
+    document.addEventListener('DOMContentLoaded', function() {
+      console.log('DOM loaded, attaching event listeners');
 
-    // Add click handlers for gym cards
-    document.querySelectorAll('.gym-card').forEach(card => {
-      card.addEventListener('click', () => showPage('gym-detail'));
-      card.addEventListener('touchend', function(e) {
-        e.preventDefault();
-        showPage('gym-detail');
+      // Touch swipe for slider
+      const heroSection = document.querySelector('.gym-hero');
+      if (heroSection) {
+        heroSection.addEventListener('touchstart', e => {
+          touchStartX = e.changedTouches[0].screenX;
+        });
+        heroSection.addEventListener('touchend', e => {
+          touchEndX = e.changedTouches[0].screenX;
+          handleSwipe();
+        });
+      }
+
+      // Add touch/click handlers for check-in button (iOS fix)
+      const checkinBtn = document.querySelector('.checkin-btn');
+      if (checkinBtn) {
+        console.log('Found checkin button');
+        checkinBtn.addEventListener('click', performCheckIn);
+        checkinBtn.addEventListener('touchend', function(e) {
+          e.preventDefault();
+          performCheckIn();
+        });
+      }
+
+      // Add click handlers for gym cards
+      document.querySelectorAll('.gym-card').forEach(card => {
+        card.addEventListener('click', () => showPage('gym-detail'));
+        card.addEventListener('touchend', function(e) {
+          e.preventDefault();
+          showPage('gym-detail');
+        });
       });
+
+      // Add click handler for favorite gym photo
+      const favGym = document.querySelector('.favorite-gym-photo');
+      if (favGym) {
+        favGym.addEventListener('click', () => showPage('gym-detail'));
+        favGym.addEventListener('touchend', function(e) {
+          e.preventDefault();
+          showPage('gym-detail');
+        });
+      }
+
+      // Back button on gym detail
+      const backBtn = document.querySelector('.back-btn');
+      if (backBtn) {
+        backBtn.addEventListener('click', () => showPage('home-page'));
+      }
+
+      // Back button on check-in success
+      const checkinBackBtn = document.querySelector('.checkin-back-btn');
+      if (checkinBackBtn) {
+        checkinBackBtn.addEventListener('click', () => showPage('home-page'));
+      }
+
+      console.log('All event listeners attached');
     });
-
-    // Add click handler for favorite gym photo
-    const favGym = document.querySelector('.favorite-gym-photo');
-    if (favGym) {
-      favGym.addEventListener('click', () => showPage('gym-detail'));
-      favGym.addEventListener('touchend', function(e) {
-        e.preventDefault();
-        showPage('gym-detail');
-      });
-    }
-
-    // Back button on gym detail
-    const backBtn = document.querySelector('.back-btn');
-    if (backBtn) {
-      backBtn.addEventListener('click', () => showPage('home-page'));
-    }
-
-    // Back button on check-in success
-    const checkinBackBtn = document.querySelector('.checkin-back-btn');
-    if (checkinBackBtn) {
-      checkinBackBtn.addEventListener('click', () => showPage('home-page'));
-    }
 
     // Service Worker registration
     if ('serviceWorker' in navigator) {
