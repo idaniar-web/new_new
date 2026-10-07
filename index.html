@@ -625,9 +625,9 @@
       position: absolute;
       top: 50%;
       left: 50%;
-      width: 231px;
-      height: 231px;
-      border: 22px solid rgb(71, 122, 132);
+      width: 219px;
+      height: 219px;
+      border: 16px solid rgb(71, 122, 132);
       border-radius: 50%;
       animation: checkin-halo 2s ease-out infinite;
     }
@@ -637,13 +637,17 @@
         opacity: 0.72;
         transform: translate(-50%, -50%) scale(1);
       }
-      78% {
+      65% {
+        opacity: 0.62;
+        transform: translate(-50%, -50%) scale(1.18);
+      }
+      90% {
         opacity: 0.2;
-        transform: translate(-50%, -50%) scale(1.05);
+        transform: translate(-50%, -50%) scale(1.32);
       }
       100% {
         opacity: 0;
-        transform: translate(-50%, -50%) scale(1.07);
+        transform: translate(-50%, -50%) scale(1.35);
       }
     }
 
