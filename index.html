@@ -492,6 +492,7 @@
       background: rgba(255, 255, 255, 0.85);
       backdrop-filter: blur(10px);
       -webkit-backdrop-filter: blur(10px);
+      z-index: 1000;
     }
 
     .checkin-btn {
@@ -504,6 +505,8 @@
       font-size: 18px;
       font-weight: 500;
       cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
     }
 
     .checkin-btn:active {
@@ -821,7 +824,7 @@ Wellpass</p>
   </div>
 
   <!-- ========== GYM DETAIL PAGE ========== -->
-  <div id="gym-detail" class="page">
+  <div id="gym-detail" class="page gym-detail-page">
     <div class="gym-hero">
       <div class="gym-hero-slider" id="gym-slider">
         <img src="images/gymPhoto1.jpg" alt="Gym 1">
@@ -1007,6 +1010,15 @@ Wellpass</p>
       
       document.getElementById('checkin-datetime').textContent = dateStr;
       showPage('checkin-success');
+    }
+
+    // Add touch/click handlers for check-in button (iOS fix)
+    const checkinBtn = document.querySelector('.checkin-btn');
+    if (checkinBtn) {
+      checkinBtn.addEventListener('touchend', function(e) {
+        e.preventDefault();
+        performCheckIn();
+      });
     }
 
     // Service Worker registration
