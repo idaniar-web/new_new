@@ -1,4 +1,4 @@
-const CACHE_NAME = 'wellpass-v2';
+const CACHE_NAME = 'wellpass-v3';
 const urlsToCache = [
   './',
   './index.html',

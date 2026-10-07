@@ -517,11 +517,15 @@
 
     /* ========== CHECK-IN SUCCESS PAGE ========== */
     .checkin-success-page {
-      min-height: 100dvh;
-      padding-top: 90px;
+      position: fixed;
+      inset: 0;
+      min-height: 0;
+      height: 100dvh;
+      padding-top: 70px;
       background: rgb(251, 249, 250);
-      position: relative;
       overflow: hidden;
+      overscroll-behavior: none;
+      touch-action: none;
       isolation: isolate;
     }
 
@@ -589,9 +593,9 @@
     }
 
     .validation-card {
-      height: 575px;
-      margin: 20px 35px auto;
-      padding: 98px 20px 0;
+      height: 68dvh;
+      margin: 0 35px auto;
+      padding: 66px 20px 0;
       flex-shrink: 0;
       background: var(--white);
       border-radius: 22px;
@@ -609,7 +613,7 @@
       position: relative;
       width: 220px;
       height: 220px;
-      margin: 57px auto 129px;
+      margin: 57px auto 0;
       display: grid;
       place-items: center;
     }
@@ -618,9 +622,9 @@
       position: absolute;
       top: 50%;
       left: 50%;
-      width: 340px;
-      height: 340px;
-      border: 26px solid rgb(71, 122, 132);
+      width: 270px;
+      height: 270px;
+      border: 22px solid rgb(71, 122, 132);
       border-radius: 50%;
       animation: checkin-halo 2s ease-out infinite;
     }
@@ -628,15 +632,15 @@
     @keyframes checkin-halo {
       0% {
         opacity: 0.72;
-        transform: translate(-50%, -50%) scale(0.88);
+        transform: translate(-50%, -50%) scale(0.9);
       }
-      82% {
-        opacity: 0.12;
-        transform: translate(-50%, -50%) scale(1.12);
+      78% {
+        opacity: 0.2;
+        transform: translate(-50%, -50%) scale(1.04);
       }
       100% {
         opacity: 0;
-        transform: translate(-50%, -50%) scale(1.14);
+        transform: translate(-50%, -50%) scale(1.06);
       }
     }
 
