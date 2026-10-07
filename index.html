@@ -596,6 +596,8 @@
       height: 68dvh;
       margin: 0 35px auto;
       padding: 66px 20px 0;
+      display: flex;
+      flex-direction: column;
       flex-shrink: 0;
       background: var(--white);
       border-radius: 22px;
@@ -616,14 +618,15 @@
       margin: 57px auto 0;
       display: grid;
       place-items: center;
+      flex-shrink: 0;
     }
 
     .profile-ring {
       position: absolute;
       top: 50%;
       left: 50%;
-      width: 270px;
-      height: 270px;
+      width: 264px;
+      height: 264px;
       border: 22px solid rgb(71, 122, 132);
       border-radius: 50%;
       animation: checkin-halo 2s ease-out infinite;
@@ -632,15 +635,15 @@
     @keyframes checkin-halo {
       0% {
         opacity: 0.72;
-        transform: translate(-50%, -50%) scale(0.9);
+        transform: translate(-50%, -50%) scale(1);
       }
       78% {
         opacity: 0.2;
-        transform: translate(-50%, -50%) scale(1.04);
+        transform: translate(-50%, -50%) scale(1.05);
       }
       100% {
         opacity: 0;
-        transform: translate(-50%, -50%) scale(1.06);
+        transform: translate(-50%, -50%) scale(1.07);
       }
     }
 
@@ -656,14 +659,21 @@
       position: relative;
       width: 220px;
       height: 220px;
-      border: 10px solid var(--white);
+      border: 0;
       border-radius: 50%;
       object-fit: cover;
+      object-position: center 35%;
       z-index: 1;
     }
 
+    .identity-details {
+      width: 100%;
+      margin-top: auto;
+      padding-bottom: 42px;
+    }
+
     .validation-card h3 {
-      margin-top: 31px;
+      margin: 0;
       font-size: 28px;
       font-weight: 700;
     }
@@ -678,7 +688,7 @@
       margin-top: 5px;
       font-size: 17px;
       color: var(--text-secondary);
-      padding-bottom: 50px;
+      padding-bottom: 0;
     }
 
     .checkin-logo {
@@ -976,11 +986,13 @@ Wellpass</p>
       <h2>Session validated</h2>
       <div class="profile-halo-container">
         <div class="profile-ring"></div>
-        <img class="profile-halo-img" src="images/profilePhoto.jpg" alt="Profile">
+        <img class="profile-halo-img" src="photo_profile_new.jpg" alt="Leo Braimont">
       </div>
-      <h3 id="checkin-name">Andrei Gaisin</h3>
-      <div class="venue" id="checkin-venue">RITM Champs Elysées</div>
-      <div class="datetime" id="checkin-datetime"></div>
+      <div class="identity-details">
+        <h3 id="checkin-name">Leo Braimont</h3>
+        <div class="venue" id="checkin-venue">RITM Ternes</div>
+        <div class="datetime" id="checkin-datetime"></div>
+      </div>
     </div>
 
     <div class="checkin-logo">

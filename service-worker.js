@@ -1,8 +1,9 @@
-const CACHE_NAME = 'wellpass-v3';
+const CACHE_NAME = 'wellpass-v4';
 const urlsToCache = [
   './',
   './index.html',
   './manifest.json',
+  './photo_profile_new.jpg',
   './images/gymPhoto1.jpg',
   './images/gymPhoto2.jpg',
   './images/gymPhoto3.jpg',
