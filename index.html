@@ -517,25 +517,31 @@
 
     /* ========== CHECK-IN SUCCESS PAGE ========== */
     .checkin-success-page {
-      background: rgba(251, 249, 250, 1);
+      min-height: 100dvh;
+      padding-top: 90px;
+      background: rgb(251, 249, 250);
       position: relative;
       overflow: hidden;
+      isolation: isolate;
     }
 
     .checkin-bg-shapes {
       position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
+      inset: 0;
+      z-index: 0;
+      overflow: hidden;
       pointer-events: none;
     }
 
-    .bg-shape-1 {
+    .bg-shape-1,
+    .bg-shape-2 {
       position: absolute;
+      background: rgb(20, 87, 102);
+    }
+
+    .bg-shape-1 {
       width: 150px;
       height: 250px;
-      background: rgba(20, 87, 102, 1);
       border-radius: 30px;
       transform: rotate(-10deg);
       left: -110px;
@@ -543,22 +549,28 @@
     }
 
     .bg-shape-2 {
-      position: absolute;
       width: 180px;
       height: 280px;
-      background: rgba(20, 87, 102, 1);
       border-radius: 35px;
       transform: rotate(-18deg);
       right: -90px;
       top: 63%;
     }
 
+    .checkin-header,
+    .validation-card,
+    .checkin-logo {
+      position: relative;
+      z-index: 1;
+    }
+
     .checkin-header {
       display: flex;
       align-items: center;
       justify-content: center;
-      position: relative;
+      height: 70px;
       padding: 15px 15px 0;
+      flex-shrink: 0;
     }
 
     .checkin-back-btn {
@@ -577,54 +589,73 @@
     }
 
     .validation-card {
-      margin: 2px 27px auto;
-      padding: 66px 20px 0;
+      height: 575px;
+      margin: 20px 35px auto;
+      padding: 98px 20px 0;
+      flex-shrink: 0;
       background: var(--white);
       border-radius: 22px;
-      box-shadow: var(--shadow-md);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.12);
       text-align: center;
     }
 
     .validation-card h2 {
       font-size: 34px;
       font-weight: 600;
-      color: rgba(71, 122, 132, 1);
+      color: rgb(71, 122, 132);
     }
 
     .profile-halo-container {
       position: relative;
-      width: 190px;
-      height: 190px;
-      margin: 38px auto 0;
+      width: 220px;
+      height: 220px;
+      margin: 57px auto 129px;
+      display: grid;
+      place-items: center;
     }
 
     .profile-ring {
       position: absolute;
       top: 50%;
       left: 50%;
-      transform: translate(-50%, -50%);
-      width: 190px;
-      height: 190px;
+      width: 340px;
+      height: 340px;
+      border: 26px solid rgb(71, 122, 132);
       border-radius: 50%;
-      animation: ringPulse 2s ease-out infinite;
+      animation: checkin-halo 2s ease-out infinite;
     }
 
-    @keyframes ringPulse {
+    @keyframes checkin-halo {
       0% {
-        box-shadow: 0 0 0 0 rgba(20, 87, 102, 0.4);
+        opacity: 0.72;
+        transform: translate(-50%, -50%) scale(0.88);
+      }
+      82% {
+        opacity: 0.12;
+        transform: translate(-50%, -50%) scale(1.12);
       }
       100% {
-        box-shadow: 0 0 0 40px rgba(20, 87, 102, 0);
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(1.14);
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .profile-ring {
+        animation: none;
+        opacity: 0.72;
+        transform: translate(-50%, -50%);
       }
     }
 
     .profile-halo-img {
       position: relative;
-      width: 100%;
-      height: 100%;
+      width: 220px;
+      height: 220px;
+      border: 10px solid var(--white);
       border-radius: 50%;
       object-fit: cover;
-      z-index: 2;
+      z-index: 1;
     }
 
     .validation-card h3 {
@@ -922,7 +953,7 @@ Wellpass</p>
   </div>
 
   <!-- ========== CHECK-IN SUCCESS PAGE ========== -->
-  <div id="checkin-success" class="page">
+  <div id="checkin-success" class="page checkin-success-page">
     <div class="checkin-bg-shapes">
       <div class="bg-shape-1"></div>
       <div class="bg-shape-2"></div>
@@ -1001,14 +1032,16 @@ Wellpass</p>
 
     // Check-in functionality
     function performCheckIn() {
-      console.log('performCheckIn called');
       const now = new Date();
-      const months = ['January','February','March','April','May','June',
-                      'July','August','September','October','November','December'];
-      const h = String(now.getHours()).padStart(2,'0');
-      const m = String(now.getMinutes()).padStart(2,'0');
-      const dateStr = `${months[now.getMonth()]} ${now.getDate()}, ${now.getFullYear()}, ${h}:${m}`;
-      
+      const month = String(now.getMonth() + 1).padStart(2, '0');
+      const day = String(now.getDate()).padStart(2, '0');
+      const year = String(now.getFullYear()).slice(-2);
+      const hours = now.getHours();
+      const hour12 = hours % 12 || 12;
+      const minutes = String(now.getMinutes()).padStart(2, '0');
+      const meridiem = hours >= 12 ? 'PM' : 'AM';
+      const dateStr = `${month}/${day}/${year}, ${hour12}:${minutes} ${meridiem}`;
+
       document.getElementById('checkin-datetime').textContent = dateStr;
       showPage('checkin-success');
     }
